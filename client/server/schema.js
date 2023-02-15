@@ -8,7 +8,8 @@ const shopType = require('./types/shop/shop.schema.js');
 const productType = require('./types/product/product.schema.js');
 const orderType = require('./types/order/order.schema');
 const fileType = require('./types/files/files.schema');
-const categoriesType= require('./types/categories/categories.schema')
+const categoriesType= require('./types/categories/categories.schema');
+const cartType = require('./types/cart/cart.schema');
 
 
 
@@ -20,7 +21,8 @@ const shopResolver = require('./resolvers/shop/shop.resolver');
 const productResolver = require('./resolvers/product/product.resolver');
 const orderResolver = require('./resolvers/order/order.resolver');
 const fileResolver = require('./resolvers/files/files.resolver');
-const categoriesResolver = require('./resolvers/categories/categories.resolver')
+const categoriesResolver = require('./resolvers/categories/categories.resolver');
+const cartResolver = require('./resolvers/cart/cart.resolver');
 
 const type=[
     userType,
@@ -29,7 +31,8 @@ const type=[
     productType,
     orderType,
     fileType,
-    categoriesType
+    categoriesType,
+    cartType
 ]
 
 
@@ -40,7 +43,8 @@ const allResolvers = [
     productResolver,
     orderResolver,
     fileResolver,
-    categoriesResolver
+    categoriesResolver,
+    cartResolver
 ]
 
 
