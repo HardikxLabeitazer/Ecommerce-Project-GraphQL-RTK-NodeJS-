@@ -22,6 +22,7 @@ export const cart = {
                     mrp
                     sellingprice
                     }
+                    quantity
                 }
                 }
             }
@@ -48,13 +49,14 @@ export const cart = {
                     mrp
                     sellingprice
                     }
+                    quantity
                 }
                 }
             }
             }
     `,
     GET_CART_BY_USER:gql`
-        query {
+       query {
             getCartByUser{
                 error
                 message
@@ -74,6 +76,7 @@ export const cart = {
                     mrp
                     sellingprice
                     }
+                    quantity
                 }
                 }
             }
@@ -81,7 +84,7 @@ export const cart = {
     `,
     GET_CART_BY_ID:gql`
         query($cart_id:ID) {
-            getCartByUser(cart_id:$cart_id){
+            getCartByID(cart_id:$cart_id){
                 error
                 message
                 data{
@@ -100,6 +103,7 @@ export const cart = {
                     mrp
                     sellingprice
                     }
+                    quantity
                 }
                 }
             }

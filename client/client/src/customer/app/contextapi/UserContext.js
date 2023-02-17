@@ -10,11 +10,11 @@ import cartHelp from "../cart/cartHelp";
 const UserAuthContext = createContext({});
 
 const UserAuth = ({ children }) => {
-    const { verify, logout, loggedIn,updateData,currentUser,cartUpdate,currentCart,setCurrentBuyProduct,currentBuyProduct} = UserProviderAuth();
+    const { verify, logout, loggedIn, updateData, currentUser,refreshCart, cartUpdate, currentCart, setCurrentBuyProduct, currentBuyProduct } = UserProviderAuth();
     // const { error, data, loading } = useQuery(GET_USER_BY_ID);
-  
-    
-  
+
+
+
     useEffect(() => {
         if (auth.isAuthenticated() == false) {
             verify();
@@ -22,7 +22,7 @@ const UserAuth = ({ children }) => {
     }, [])
 
     return (
-        <UserAuthContext.Provider value={{ verify, logout, currentUser, loggedIn ,updateData,cartUpdate,currentCart,setCurrentBuyProduct,currentBuyProduct}}>
+        <UserAuthContext.Provider value={{ verify, logout, currentUser, loggedIn,refreshCart, updateData, cartUpdate, currentCart, setCurrentBuyProduct, currentBuyProduct }}>
             <div>
                 {children}
             </div>
@@ -38,20 +38,22 @@ export const UserAuthFinal = () => {
 
 
 const UserProviderAuth = () => {
-    const [isUpdated,setIsUpdated] = useState(false);
+    const [isUpdated, setIsUpdated] = useState(false);
     const [currentUser, setCurrentUser] = useState([]);
-    const [currentCart,setCurrentCart] = useState(cartHelp.getCart());
-    const [currentBuyProduct,setCurrentBuyProduct] = useState([]);
-    
-    useEffect(()=>{
-        fetch('http://localhost:4000/graphql',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'Authorization':'Bearer '+auth?.isAuthenticated()
+    const [currentCart, setCurrentCart] = useState([]);
+    const [currentBuyProduct, setCurrentBuyProduct] = useState([]);
+    const abortController = new AbortController()
+    const signal = abortController.signal
+
+    useEffect(() => {
+        fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + auth?.isAuthenticated()
             },
-            body:JSON.stringify({
-                query:`
+            body: JSON.stringify({
+                query: `
                 query{
                     getUserByID{
                       error
@@ -66,12 +68,71 @@ const UserProviderAuth = () => {
                   }
                 `
             })
-        }).then(res=>res.json())
-        .then(data=>{
+        }).then(res => res.json())
+            .then(data => {
+
+                setCurrentUser(data.data.getUserByID.data)
+            })
+
+
+            fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + auth?.isAuthenticated()
+            },
+            body: JSON.stringify({
+                query: `
+                query {
+                    getCartByUser{
+                        error
+                        message
+                        data{
+                        _id
+                        total_items
+                        total_amount
+                        total_discount
+                        total_quantity
+                        user {
+                            _id
+                        }
+                        products{
+                            product{
+                            _id
+                            name
+                            mrp
+                            sellingprice
+                            }
+                            quantity
+                        }
+                        }
+                    }
+                    }
+                `
+            })
+        }).then((res)=>res.json())
+            .then(data=>{
+                
+                if(data.data.getCartByUser.error==false){
+                   
+                    setCurrentCart(data.data.getCartByUser.data)
+                }
+            })
+        
+
+
             
-        setCurrentUser(data.data.getUserByID.data)
-        })
-    },[auth.isAuthenticated()])
+
+
+        
+
+
+       
+
+    }, []);
+
+
+    
 
     const navigate = useNavigate();
 
@@ -85,9 +146,11 @@ const UserProviderAuth = () => {
 
 
     // }
-    const updateData = ()=>{
+    const updateData = () => {
         setIsUpdated(true);
     }
+
+
 
     const loggedIn = () => {
         if (auth.isAuthenticated() !== false) {
@@ -112,11 +175,132 @@ const UserProviderAuth = () => {
 
         navigate('/login')
     }
-    const cartUpdate = ()=>{
-       setCurrentCart(cartHelp.getCart());
+    const cartUpdate = () => {
+        // fetch('http://localhost:4000/graphql', {
+        //     method: 'POST',
+        //     signal:signal,
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer ' + auth?.isAuthenticated()
+        //     },
+        //     body: JSON.stringify({
+        //         query: `
+        //         query {
+        //             getCartByUser{
+        //                 error
+        //                 message
+        //                 data{
+        //                 _id
+        //                 total_items
+        //                 total_amount
+        //                 total_discount
+        //                 total_quantity
+        //                 user {
+        //                     _id
+        //                 }
+        //                 products{
+        //                     product{
+        //                     _id
+        //                     name
+        //                     mrp
+        //                     sellingprice
+        //                     }
+        //                 }
+        //                 }
+        //             }
+        //             }
+        //         `
+        //     })
+        // })
+
+        fetch('http://localhost:4000/graphql', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + auth?.isAuthenticated()
+                        },
+                        body: JSON.stringify({
+                            query: `
+                            mutation{
+                                addNewCart{
+                                    error
+                                    message
+                                    data{
+                                    _id
+                                    total_items
+                                    total_amount
+                                    total_discount
+                                    total_quantity
+                                    user {
+                                        _id
+                                    }
+                                    products{
+                                        product{
+                                        _id
+                                        name
+                                        mrp
+                                        sellingprice
+                                        }
+                                        quantity
+                                    }
+                                    }
+                                }
+                                }
+                `
+                        })
+                    }).then(res => res.json())
+                        .then(data=>{
+                            setCurrentCart(data.data.addNewCart.data);
+                        })
+    }
+
+    const refreshCart = ()=>{
+        fetch('http://localhost:4000/graphql', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + auth?.isAuthenticated()
+            },
+            body: JSON.stringify({
+                query: `
+                query {
+                    getCartByUser{
+                        error
+                        message
+                        data{
+                        _id
+                        total_items
+                        total_amount
+                        total_discount
+                        total_quantity
+                        user {
+                            _id
+                        }
+                        products{
+                            product{
+                            _id
+                            name
+                            mrp
+                            sellingprice
+                            }
+                            quantity
+                        }
+                        }
+                    }
+                    }
+                `
+            })
+        }).then((res)=>res.json())
+            .then(data=>{
+                
+                if(data.data.getCartByUser.error==false){
+                    setCurrentCart(data.data.getCartByUser.data)
+                }
+            })
+      
     }
     return {
-        verify, logout, loggedIn,updateData,currentUser,setCurrentUser,cartUpdate,currentCart,currentBuyProduct,setCurrentBuyProduct
+        verify, logout, loggedIn, updateData, currentUser, setCurrentUser, cartUpdate, currentCart, currentBuyProduct,refreshCart, setCurrentBuyProduct
     }
 }
 

@@ -11,6 +11,14 @@ const addNewCart = async (_,args,context)=>{
     }
     try {
         
+        let isExists = await Cart.findOne({user:context?.user_id});
+        if(isExists){
+            return {
+                error:true,
+                message:'Cart Already Exists',
+                data:isExists
+            }
+        }
         let cartDetails = new Cart({user:context.user_id});
 
         let result = await cartDetails.save();
@@ -70,7 +78,7 @@ const getCartByUser = async (_,args,context)=>{
         }
     }
     try {
-        console.log(context)
+        
         let cartDetails = await Cart.findOne({user:context.user_id}).populate({path:'products.product'});
 
         if(!cartDetails){
@@ -80,7 +88,7 @@ const getCartByUser = async (_,args,context)=>{
             }
         }
         
-
+       
         return {
             error:false,
             message:'Cart Found',

@@ -9,10 +9,19 @@ import SellerAuth from './seller/app/providers/SellerContext';
 // import { useEffect } from 'react';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-const User = React.lazy(()=>import('./customer/pages/User/User'))
+
 // import User from './customer/pages/User/User';
 
 
+
+//seller
+import HomeSeller from './seller/pages/dashboardPage';
+import SellerLogin from './seller/pages/loginPage';
+import SellerOrders from './seller/pages/orders';
+import SellerProducts from './seller/pages/Products';
+
+
+const User = React.lazy(()=>import('./customer/pages/User/User'))
 // const NavBar = React.lazy(()=>import('./customer/pages/NavBar/NavBar'));
 const Login = React.lazy(()=>import('./customer/pages/Authorization/Login/Login'));
 const SignUp = React.lazy(()=>import('./customer/pages/Authorization/SignUp/SignUp'));
@@ -57,16 +66,12 @@ const AdminLogin = React.lazy(()=>import('./admin/pages/loginpage'));
 // import AdminLogin from './admin/pages/loginpage';
 
 
-const HomeSeller = React.lazy(()=>import('./seller/pages/dashboardPage'));
-const SellerLogin = React.lazy(()=>import('./seller/pages/loginPage'));
-const SellerOrders = React.lazy(()=>import('./seller/pages/orders'));
-const SellerListings = React.lazy(()=>import('./seller/pages/Listings'));
+// const HomeSeller = React.lazy(()=>import('./seller/pages/dashboardPage'));
+// const SellerLogin = React.lazy(()=>import('./seller/pages/loginPage'));
+// const SellerOrders = React.lazy(()=>import('./seller/pages/orders'));
+// const SellerListings = React.lazy(()=>import('./seller/pages/Listings'));
 
-// import HomeSeller from './seller/pages/dashboardPage';
-// import SellerLogin from './seller/pages/loginPage';
-// import SellerOrders from './seller/pages/orders';
 
-// import SellerListings from './seller/pages/Listings';
 
 
 function App() {
@@ -99,7 +104,7 @@ function App() {
                 <Route index element={<SellerAuth children={<HomeSeller/>}/>}/>
                 <Route path='login' element={<SellerLogin/>}/>
                 <Route path="orders" element={<SellerAuth children={<SellerOrders/>}/>}/>
-                <Route path='listings' element={<SellerAuth children={<SellerListings/>}/>}/>
+                <Route path='products' element={<SellerAuth children={<SellerProducts/>}/>}/>
               </Route>
 
               ///Admin Routes

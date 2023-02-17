@@ -12,7 +12,7 @@ import { Input, Rate } from 'antd'
 
 const Product = () => {
     const params = useParams();
-    const { cartUpdate, currentUser ,setCurrentBuyProduct} = UserAuthFinal();
+    const { cartUpdate, currentUser ,setCurrentBuyProduct,currentCart,refreshCart} = UserAuthFinal();
      const navigate = useNavigate();
 
     let initialProductPageState = {
@@ -47,11 +47,21 @@ const Product = () => {
         }
     });
 
+    const [updateCart] = useMutation(graphQLQueries.UPDATE_CART_BY_USER,{
+        onCompleted(data){
+            console.log(data)
+            if(data.updateCartByUser.error==false){
+                refreshCart()
+            }
+            
+        }
+    })
+
 
 
     const handleAddCart = () => {
         cartHelp.addToCart(product, () => { });
-        cartUpdate();
+        // cartUpdate();
     }
 
     const handleFileChange = async e => {
@@ -116,7 +126,11 @@ const Product = () => {
 
                             </div>
                             <div className='flex justify-center space-x-8 mt-8'>
-                                <button onClick={()=>cartHelp.addToCart(handleProductInfo(),()=>{cartUpdate()})} className='py-4 w-[200px] bg-purple-500 text-[16px] rounded-sm shadow hover:bg-purple-600 text-white font-bold'>ADD TO CART</button>
+                                <button onClick={()=>{ updateCart({variables:{
+                                    cart_id:currentCart?._id,
+                                    product:product._id,
+                                    quantity:1
+                                }})}} className='py-4 w-[200px] bg-purple-500 text-[16px] rounded-sm shadow hover:bg-purple-600 text-white font-bold'>ADD TO CART</button>
                                 <button onClick={handleBuyNow} className='py-4 w-[200px] bg-purple-500 text-[16px] rounded-sm shadow hover:bg-purple-600 text-white font-bold'>BUY NOW</button>
                             </div>
 

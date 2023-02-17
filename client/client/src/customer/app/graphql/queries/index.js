@@ -3,7 +3,8 @@ import { shops } from "./shops";
 import {product} from './product'
 import {orders} from './order';
 import {files} from './files';
-import {categories} from './catergories'
+import {categories} from './catergories';
+import { cart } from "./cart";
 
 
 let graphQLQueries={};
@@ -21,5 +22,6 @@ addQuery(product);
 addQuery(orders);
 addQuery(files);
 addQuery(categories);
+addQuery(cart);
 
 export default graphQLQueries

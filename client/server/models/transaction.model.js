@@ -27,3 +27,6 @@ const TransactionSchema = new mongoose.Schema({
         type:mongoose.Schema.ObjectId
     }
 })
+
+
+module.exports = mongoose.model('Transaction',TransactionSchema);

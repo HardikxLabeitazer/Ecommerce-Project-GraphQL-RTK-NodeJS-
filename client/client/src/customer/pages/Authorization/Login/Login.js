@@ -14,14 +14,15 @@ import { resolveReadonlyArrayThunk } from 'graphql';
 
 const Login = () => {
 
-  const {updateData} = UserAuthFinal();
+  const {updateData,cartUpdate} = UserAuthFinal();
   const [loginForm] = Form.useForm(); 
   const navigate = useNavigate();
 
   const [signupuser,{error,data,loading}] =useMutation(graphQLQueries.SIGN_IN_USER,{
     onCompleted(data){
       auth.authenticate(data.signin.token,()=>{console.log(data.signin.token)});
-      navigate('/')
+      navigate('/');
+      cartUpdate();
     }
   });
   

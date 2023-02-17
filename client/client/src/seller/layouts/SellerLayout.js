@@ -19,8 +19,7 @@ const SellerLayout = ({children}) => {
         <Sidebar>
             <p className='text-2xl text-center text-white font-semibold py-5'>Seller</p>
             <Sidebar.Child name="Home" icon={<FiBox size={25}/>} href="/seller"/> 
-            <Sidebar.Child name="Listings" icon={<FiBox size={25}/>} href="/seller/listings"/>
-            <Sidebar.Child name="Inventory" icon={<FiBox size={25}/>} href="/seller/products"/>
+            <Sidebar.Child name="Products" icon={<FiBox size={25}/>} href="/seller/products"/>
             <Sidebar.Child name="Orders" icon={<FiBox size={25}/>} href="/seller/orders"/> 
             <Sidebar.Child name="Payments" icon={<FiBox size={25}/>} href="/seller/reviews"/>
             <Sidebar.Child name="Promotions" icon={<FiBox size={25}/>} href="/seller/reviews"/>

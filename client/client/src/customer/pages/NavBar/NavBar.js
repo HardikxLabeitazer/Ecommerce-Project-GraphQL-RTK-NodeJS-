@@ -19,42 +19,13 @@ const NavBar = ({ children }) => {
     }
     useEffect(() => {
         if (currentCart) {
-            setCartCount(currentCart?.length)
+            setCartCount(currentCart?.products?.length)
         }
 
-    }, [currentCart])
+    }, [currentCart?.products?.length])
 
     return (<>
-        {/* <nav className='navbar' >
-            <Link to="/" style={{ fontSize: 'x-large', color: 'black' }}>
-                ECOM
-            </Link>
-            <div>
-                <Link to="/cart" className='' style={{ marginRight: '10px', padding: '5px', border: '1px solid gray', color: 'black' }}>
-                    Cart({cartCount ? cartCount : '0'})
-                </Link>
-                <Link to="/user" className='' style={{ marginRight: '10px', padding: '5px', border: '1px solid gray', color: 'black' }}>
-                    User
-                </Link>
-                {
-                    currentUser?.user_type === 'seller' &&
-                    <Link to="/user/myshops" className='' style={{ marginRight: '10px', padding: '5px', border: '1px solid gray', color: 'black' }}>
-                        My Shops
-                    </Link>
-                }
-                {auth.isAuthenticated() === false ?
-                    <button className='' style={{ marginRight: '5px', marginTop: '10px' }}>
-                        Login
-                    </button> : <button onClick={handlelogout} className='' style={{ marginRight: '5px', marginTop: '10px' }}>
-                        Logout
-                    </button>
-
-                }
-
-
-
-            </div>
-        </nav> */}
+        
         <nav className='h-[60px] shadow w-full text-white flex justify-between px-8 items-center bg-purple-500 fixed z-50 top-0 right-0 left-0'>
             <div className='flex gap-[10px] w-1/2 ml-20 items-center'>
                 <Link to="/" className='text-white hover:text-white'>
