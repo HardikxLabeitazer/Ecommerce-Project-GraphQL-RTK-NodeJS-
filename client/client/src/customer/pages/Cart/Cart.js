@@ -78,7 +78,7 @@ const Cart = () => {
                                 currentCart?.products?.map((data, i) => {
                                     return <div key={i} className='flex relative border-gray-50 items-center hover:border-gray-200 border space-x-3'>
                                         <div>
-                                            <img className='w-36 h-36' src={ ''} />
+                                            <img className='w-36 h-36' src={data?.product?.images?.length>0?data?.product?.images[0]:'https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100'} />
                                         </div>
                                         <div>
                                             <p className='text-lg'>{data.product?.name}</p>
@@ -118,7 +118,7 @@ const Cart = () => {
                                 })
                             }
                         </div>
-                        <div className='w-1/3 '>
+                        <div className='w-1/3 fixed right-20 top-2'>
                             <p className='mx-3 my-3 text-gray-400 font-semibold text-lg'>Price Details</p>
                             <hr className='my-2' />
                             <span className='flex items-center justify-between mx-3 text-lg font-semibold'>

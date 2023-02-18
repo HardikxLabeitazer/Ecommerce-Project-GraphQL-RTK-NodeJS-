@@ -19,6 +19,8 @@ import HomeSeller from './seller/pages/dashboardPage';
 import SellerLogin from './seller/pages/loginPage';
 import SellerOrders from './seller/pages/orders';
 import SellerProducts from './seller/pages/Products';
+import AddProduct from './seller/pages/Products/Add';
+import EditProduct from './seller/pages/Products/Edit';
 
 
 const User = React.lazy(()=>import('./customer/pages/User/User'))
@@ -105,6 +107,8 @@ function App() {
                 <Route path='login' element={<SellerLogin/>}/>
                 <Route path="orders" element={<SellerAuth children={<SellerOrders/>}/>}/>
                 <Route path='products' element={<SellerAuth children={<SellerProducts/>}/>}/>
+                <Route path='products/add' element={<SellerAuth children={<AddProduct/>}/>}/>
+                <Route path='products/edit/:productId' element={<SellerAuth children={<EditProduct/>}/>}/>
               </Route>
 
               ///Admin Routes

@@ -41,7 +41,7 @@ const SellerProducts = () => {
                 // handleEditClick(product);
             }
             return (
-                <Tooltip placement='right' title="Edit Product">
+                <Tooltip onClick={()=>navigate('edit/'+product._id)} placement='right' title="Edit Product">
                     <div><AiOutlineEdit /></div>
                 </Tooltip>
             )

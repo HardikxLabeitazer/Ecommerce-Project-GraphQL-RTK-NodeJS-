@@ -57,6 +57,9 @@ const typeDefs = gql`
         features:[String]
         brand:String
         review:[ReviewOutput]
+        yearofrelease:String
+        warranty:String
+        color:String
     }
 
     input NewProductInput{
@@ -71,7 +74,7 @@ const typeDefs = gql`
         owner:ID
         Unit:String
         discount:String
-        countryoforigin:String
+       
         manufacture:String
         model:String
         offers:[String]
@@ -81,6 +84,10 @@ const typeDefs = gql`
         active:Boolean
         features:[String]
         brand:String
+        yearofrelease:String
+        warranty:String
+        color:String
+        countryoforigin:String
     }
 
     input UpdateProductInput{
@@ -106,6 +113,9 @@ const typeDefs = gql`
         active:Boolean
         features:[String]
         brand:String
+        yearofrelease:String
+        warranty:String
+        color:String
     }
 
    input RatingReviewInput {

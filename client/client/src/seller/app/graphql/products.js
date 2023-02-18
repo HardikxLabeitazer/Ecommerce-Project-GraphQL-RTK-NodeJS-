@@ -38,7 +38,12 @@ export const products={
               manufacture
               model
               sku
-            active
+              brand
+              yearofrelease
+              warranty
+              color
+              countryoforigin
+
         }
       }
     }`,ADD_NEW_PRODUCT: gql`
@@ -69,6 +74,11 @@ export const products={
             manufacture
             model
             sku
+            brand
+              yearofrelease
+              warranty
+              color
+              countryoforigin  
             
           }
         }
@@ -112,7 +122,11 @@ export const products={
           sku
           category
           weight
-          
+          brand
+          yearofrelease
+           warranty
+          color
+          countryoforigin
         }
       }
     }
@@ -148,6 +162,11 @@ mutation($UpdateProductInput:UpdateProductInput){
       sku
       category
       weight
+      brand
+      yearofrelease
+      warranty
+       color
+      countryoforigin
     }
   }
 }
@@ -182,6 +201,11 @@ mutation($UpdateProductInput:UpdateProductInput){
           manufacture
           model
           sku
+          brand
+          yearofrelease
+          warranty
+          color
+          countryoforigin
         }
       }
     }
@@ -226,6 +250,11 @@ mutation($UpdateProductInput:UpdateProductInput){
           manufacture
           model
           sku
+          brand
+          yearofrelease
+          warranty
+          color
+          countryoforigin
         }
       }
     }

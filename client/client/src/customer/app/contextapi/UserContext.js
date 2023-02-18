@@ -100,6 +100,7 @@ const UserProviderAuth = () => {
                             product{
                             _id
                             name
+                            images
                             mrp
                             sellingprice
                             }
@@ -240,6 +241,7 @@ const UserProviderAuth = () => {
                                         name
                                         mrp
                                         sellingprice
+                                        images
                                         }
                                         quantity
                                     }
@@ -281,6 +283,7 @@ const UserProviderAuth = () => {
                             _id
                             name
                             mrp
+                            images
                             sellingprice
                             }
                             quantity
