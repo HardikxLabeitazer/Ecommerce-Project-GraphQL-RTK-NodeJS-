@@ -21,6 +21,10 @@ export const cart = {
                     name
                     mrp
                     sellingprice
+                    shop {
+                        _id
+                        name
+                    }
                     }
                     quantity
                 }
@@ -49,6 +53,10 @@ export const cart = {
                     mrp
                     sellingprice
                     images
+                    shop {
+                        _id
+                        name
+                    }
                     }
                     quantity
                 }
@@ -77,6 +85,10 @@ export const cart = {
                     mrp
                     images
                     sellingprice
+                    shop {
+                        _id
+                        name
+                    }
                     }
                     quantity
                 }
@@ -105,6 +117,10 @@ export const cart = {
                     mrp
                     images
                     sellingprice
+                    shop {
+                        _id
+                        name
+                    }
                     }
                     quantity
                 }

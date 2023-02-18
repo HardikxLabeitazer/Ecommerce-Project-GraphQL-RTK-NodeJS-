@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import auth from '../../app/auth/auth'
 import { UserAuthFinal } from '../../app/contextapi/UserContext'
 import cartHelp from '../../app/cart/cartHelp'
@@ -14,6 +14,7 @@ const NavBar = ({ children }) => {
 
     const { logout, currentUser, currentCart } = UserAuthFinal();
     const [cartCount, setCartCount] = useState('');
+    const navigate = useNavigate();
     const handlelogout = () => {
         logout()
     }
@@ -35,7 +36,7 @@ const NavBar = ({ children }) => {
             </div>
             <div className='w-1/3 px-10 justify-between flex items-center '>
                 <div >
-                    <FaUser className='cursor-pointer' size={25} />
+                    <FaUser onClick={()=>navigate('/user')} className='cursor-pointer' size={25} />
                 </div>
                 <Link to={"/cart"} className="text-white hover:text-white">
                     <div className='flex relative items-center cursor-pointer gap-[5px]'>

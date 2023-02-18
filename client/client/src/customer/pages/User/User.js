@@ -67,9 +67,10 @@ const User = () => {
           <div className='w-1/4  '>
             <ul className='pt-10  text-center text-lg min-h-screen shadow'>
               <li onClick={() => setUserPageState({ type: 'SET_TAB', payload: "0" })} className={`py-3 border  hover:bg-gray-100 cursor-pointer border-gray-100 ${tab == '0' ? 'bg-gray-200' : ''}`}>User Details</li>
-              <li onClick={() => setUserPageState({ type: 'SET_TAB', payload: "1" })} className={`py-3 border  hover:bg-gray-100 cursor-pointer border-gray-100 ${tab == '1' ? 'bg-gray-200' : ''}`}>Orders</li>
+              <li onClick={() => setUserPageState({ type: 'SET_TAB', payload: "1" })} className={`py-3 border  hover:bg-gray-100 cursor-pointer border-gray-100 ${tab == '1' ? 'bg-gray-200' : ''}`}>Coupons</li>
               <li onClick={() => setUserPageState({ type: 'SET_TAB', payload: "2" })} className={`py-3 border  hover:bg-gray-100 cursor-pointer border-gray-100 ${tab == '2' ? 'bg-gray-200' : ''}`}>Addresses</li>
               <li onClick={() => setUserPageState({ type: 'SET_TAB', payload: "3" })} className={`py-3 border  hover:bg-gray-100 cursor-pointer border-gray-100 ${tab == '3' ? 'bg-gray-200' : ''}`}>Saved Cards</li>
+              <li onClick={()=>navigate('/user/orders')} className='mt-10 cursor-pointer rounded bg-gradient-to-l py-2 from-purple-400 to-purple-600 text-white w-1/2 mx-20'>View Orders</li>
             </ul>
           </div>
           <div className='w-3/4 '>

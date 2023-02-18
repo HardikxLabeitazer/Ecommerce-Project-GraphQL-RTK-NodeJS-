@@ -14,13 +14,13 @@ const Product = () => {
     const params = useParams();
     const { cartUpdate, currentUser ,setCurrentBuyProduct,currentCart,refreshCart} = UserAuthFinal();
      const navigate = useNavigate();
-
+    const [product,setProduct] = useState([])
     let initialProductPageState = {
         pincode: '',
         reviewText: '',
         ratingStar: 1,
         reviewTitle: '',
-        product: []
+        products: []
     }
 
 
@@ -28,7 +28,7 @@ const Product = () => {
 
     const [productPageState, setProductPageState] = useReducer(productPageReducer, initialProductPageState);
 
-    let { pincode, reviewText, ratingStar, reviewTitle, product } = productPageState;
+    let { pincode, reviewText, ratingStar, reviewTitle, products } = productPageState;
 
     const singleProductData = useQuery(graphQLQueries.GET_PRODUCT_BY_ID, {
         variables: {
@@ -36,7 +36,8 @@ const Product = () => {
         },
         onCompleted(data) {
 
-            setProductPageState({ type: 'SET_PRODUCT', payload: data.getProductByID.data });
+            // setProductPageState({ type: 'SET_PRODUCT', payload: data.getProductByID.data });
+            setProduct(data.getProductByID.data)
         }
     });
 
@@ -49,28 +50,34 @@ const Product = () => {
 
     const [updateCart] = useMutation(graphQLQueries.UPDATE_CART_BY_USER,{
         onCompleted(data){
-            console.log(data)
+           
             if(data.updateCartByUser.error==false){
                 refreshCart()
             }
             
-        }
+            
+        },
+        refetchQueries:[
+            {
+                query:graphQLQueries.GET_PRODUCT_BY_ID,variables:{_id:params.productId}
+            }
+        ]
     })
 
 
 
-    const handleAddCart = () => {
-        cartHelp.addToCart(product, () => { });
-        // cartUpdate();
-    }
+    // const handleAddCart = () => {
+    //     cartHelp.addToCart(product, () => { });
+    //     // cartUpdate();
+    // }
 
-    const handleFileChange = async e => {
-        const file = e.target.files;
-        if (!file[0]) return;
-        console.log(file[0])
-        const response = await imageUpload(file);
-        console.log('final', response);
-    }
+    // const handleFileChange = async e => {
+    //     const file = e.target.files;
+    //     if (!file[0]) return;
+    //     console.log(file[0])
+    //     const response = await imageUpload(file);
+    //     console.log('final', response);
+    // }
 
     const handleReviewAndRating = () => {
         addReviewAndRating({
@@ -127,16 +134,16 @@ const Product = () => {
                             </div>
                             <div className='flex justify-center space-x-8 mt-8'>
                                 <button onClick={()=>{ updateCart({variables:{
-                                    cart_id:currentCart?._id,
+                                    cart_id:currentCart._id,
                                     product:product._id,
                                     quantity:1
-                                }})}} className='py-4 w-[200px] bg-purple-500 text-[16px] rounded-sm shadow hover:bg-purple-600 text-white font-bold'>ADD TO CART</button>
+                                }});}} className='py-4 w-[200px] bg-purple-500 text-[16px] rounded-sm shadow hover:bg-purple-600 text-white font-bold'>ADD TO CART</button>
                                 <button onClick={handleBuyNow} className='py-4 w-[200px] bg-purple-500 text-[16px] rounded-sm shadow hover:bg-purple-600 text-white font-bold'>BUY NOW</button>
                             </div>
 
                         </div>
                         <div className='ml-[38.0%] '>
-                            <p className='mt-5 text-2xl font-semibold'>{product.name}</p>
+                            <p className='mt-5 text-2xl font-semibold'>{product?.name}</p>
                             <span className='flex items-center space-x-2'>
                                 <p className='flex  items-center pl-[5px] text-[11px] rounded bg-green-500  w-[30px] text-white'>{product?.ratings || 1} <AiFillStar /></p>
                                 <p className='text-[13px] text-gray-500 font-semibold'>800 Ratings and 200 Reviews</p>

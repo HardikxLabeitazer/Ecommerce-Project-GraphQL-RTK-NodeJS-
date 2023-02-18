@@ -117,6 +117,8 @@ const Cart = () => {
                                     </div>
                                 })
                             }
+
+                            <button className='px-5 py-2 bg-gradient-to-l from-purple-400 to-purple-600 text-white rounded'>CheckOut</button>
                         </div>
                         <div className='w-1/3 fixed right-20 top-2'>
                             <p className='mx-3 my-3 text-gray-400 font-semibold text-lg'>Price Details</p>
