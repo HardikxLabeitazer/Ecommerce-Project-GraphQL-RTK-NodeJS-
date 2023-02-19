@@ -1,5 +1,6 @@
 const Order  = require('../../models/order.model');
-const Product = require('../../models/product.model')
+const Product = require('../../models/product.model');
+const mongoose = require('mongoose')
 
 const addNewOrder = async(_,args,context)=>{
     if(!context.user_id && context.type !=='user'){
@@ -60,7 +61,43 @@ const getOrderByUserID=async(_,args,context)=>{
     }
     try {
         
-        let orders = await Order.find({ordered_by:context.user_id}).populate({path:"products.product",select:'_id name mrp images'})
+        // let orders = await Order.find({ordered_by:context.user_id}).populate({path:"products.product",select:'_id name mrp images'})
+
+        let orders = await Order.aggregate([
+            {
+                $match:{
+                    ordered_by:mongoose.Types.ObjectId(context.user_id)
+                }
+            },
+            {
+                $unwind:{
+                    path:'$products',
+                    preserveNullAndEmptyArrays:false
+                }
+            },
+            {
+                $lookup:{
+                    from:'products',
+                    localField:'products.product',
+                    foreignField:'_id',
+                    as:"products.product"
+                }
+            },
+            {
+                $sort:{
+                    'created':-1
+                }
+            }
+            
+            
+        ]).exec();
+
+        
+        
+        // for(let i = 0;i<orders.length;i++){
+        //     console.log(orders[i].products.product)
+        // }
+
         if(orders.length==0){
             return {
                 error:true,
@@ -68,7 +105,7 @@ const getOrderByUserID=async(_,args,context)=>{
                 
             }
         }
-
+       
         return {
             error:false,
             message:'Orders found',
@@ -76,6 +113,7 @@ const getOrderByUserID=async(_,args,context)=>{
         }
 
     } catch (error) {
+        console.log(error)
         return {
             error:true,
             message:'Unable to retrieve the orders'

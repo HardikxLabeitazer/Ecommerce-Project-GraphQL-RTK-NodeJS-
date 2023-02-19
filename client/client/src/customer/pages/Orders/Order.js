@@ -13,7 +13,13 @@ const Order = () => {
     let orderQueryData = useQuery(graphQLQueries.GET_ORDERS_BY_USER, {
         variables: {
             _id: currentUser?._id
-        }
+        },
+        onCompleted(data){
+            console.log(data.getOrderByUserID.data)
+        },
+        fetchPolicy: 'no-cache'
+        
+        
     });
     return (
         <Fragment>
@@ -52,14 +58,15 @@ const Order = () => {
                             orderQueryData?.data?.getOrderByUserID?.data?.map((order, i) => {
                                 return <div className='border p-3 relative items-center flex pl-8 pr-28 my-3 hover:shadow-md hover:duration-200 justify-between' key={i}>
                                     <div className='flex space-x-3'>
-                                        <img src={order?.products[0].product.images[0] || ''} alt="" className='w-20 h-20' />
+                                        <img src={order?.products?.product[0].images[0] || ''} alt="" className='w-20 h-20' />
                                         <div>
-                                            <p className='font-semibold text-[15px]'>{order?.products[0].product?.name}</p>
+                                            <p className='font-semibold text-[15px]'>{order?.products?.product[0].name}</p>
                                             <p className='text-gray-400 text-[12px]'>Color: Grey</p>
                                         </div>
                                     </div>
                                     <div className='absolute left-[50%]'>
-                                        ₹{order?.products[0].product?.mrp}
+                                        ₹{order?.products.product[0].mrp}
+                                        {console.log(order.products.product[0].name)}
                                     </div>
                                     <div className='font-semibold'>
                                         {

@@ -100,9 +100,26 @@ const UserProviderAuth = () => {
                             product{
                             _id
                             name
+                            description
+                            discount
+                            Unit
                             images
+                            quantity
                             mrp
                             sellingprice
+                            features
+                            offers
+                            owner{
+                            _id 
+                            name
+                            }
+                            shop{
+                            _id 
+                            name
+                            }
+                            manufacture
+                            model
+                            sku
                             }
                             quantity
                         }
@@ -239,9 +256,26 @@ const UserProviderAuth = () => {
                                         product{
                                         _id
                                         name
+                                        description
+                                        discount
+                                        Unit
+                                        images
+                                        quantity
                                         mrp
                                         sellingprice
-                                        images
+                                        features
+                                        offers
+                                        owner{
+                                          _id 
+                                          name
+                                        }
+                                        shop{
+                                          _id 
+                                          name
+                                        }
+                                        manufacture
+                                        model
+                                        sku
                                         }
                                         quantity
                                     }
@@ -282,9 +316,26 @@ const UserProviderAuth = () => {
                             product{
                             _id
                             name
-                            mrp
+                            description
+                            discount
+                            Unit
                             images
+                            quantity
+                            mrp
                             sellingprice
+                            features
+                            offers
+                            owner{
+                              _id 
+                              name
+                            }
+                            shop{
+                              _id 
+                              name
+                            }
+                            manufacture
+                            model
+                            sku
                             }
                             quantity
                         }

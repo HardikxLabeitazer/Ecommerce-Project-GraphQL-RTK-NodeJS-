@@ -38,12 +38,12 @@ const typeDefs = gql`
         delivery_fee:Int
         packaging_charge:Int
         total:Int
-        products:[cartData]
+        products:cartData
         delivery_address:deliveryAddressDataOutput
     }
 
     type cartData{
-        product:ProductData
+        product:[ProductData]
         quantity:Int
         shop:ShopOutputData
         status:String

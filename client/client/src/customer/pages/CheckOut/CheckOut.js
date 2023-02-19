@@ -8,32 +8,38 @@ const CheckOut = () => {
 
     const [orderForm] = Form.useForm();
 
-    const {currentBuyProduct,setCurrentBuyProduct,currentUser} = UserAuthFinal();
+    const { currentBuyProduct, setCurrentBuyProduct, currentUser } = UserAuthFinal();
 
-    let [addNewOrder] = useMutation(graphQLQueries.ADD_NEW_ORDER,{
-        onCompleted(data){
-            
+    let [addNewOrder] = useMutation(graphQLQueries.ADD_NEW_ORDER, {
+        onCompleted(data) {
+
         }
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(currentBuyProduct)
-    },[])
-    
+    }, [])
+
     const handleOrderFinish = (values) => {
         values.delivery_fee = 40;
         values.packaging_charge = 10;
-        values.total = currentBuyProduct.price;
+        values.total = currentBuyProduct[0].total_amount;
         values.ordered_by = currentUser?._id;
         values.transaction_ID = Date.now().toString();
-       
-        
-        let {product,quantity,shop} = currentBuyProduct;
-        values.products = [{product:product._id,quantity,shop}];
+
+        values.products = currentBuyProduct?.map((item, i) => {
+            return {
+                product: item.product._id,
+                quantity: item.quantity,
+                shop: item.shop
+            }
+        })
+        // let {product,quantity,shop} = currentBuyProduct;
+        // values.products = [{product:product._id,quantity,shop}];
         // console.log(values);
         addNewOrder({
-            variables:{
-                NewOrderInput:values
+            variables: {
+                NewOrderInput: values
             }
         })
     }
@@ -82,10 +88,10 @@ const CheckOut = () => {
                     </div>
                     <div className='w-[300px] bg-gray-50'>
                         <p className='my-2 mx-4 text-lg text-gray-400 font-semibold'>Price Details</p>
-                        <hr className='my-2'/>
+                        <hr className='my-2' />
                         <div className=' mx-4 text-lg flex justify-between'>
                             <p>Price</p>
-                            <p>₹{currentBuyProduct.product.sellingprice}</p>
+                            <p>₹{currentBuyProduct[0].total_amount}</p>
                         </div>
                         <div className=' mx-4 text-lg flex justify-between'>
                             <p>Delivery Charges</p>
@@ -95,21 +101,28 @@ const CheckOut = () => {
                             <p>Packaging Charge</p>
                             <p className='text-green-500'>Free</p>
                         </div>
-                        <hr className='my-2'/>
+                        <hr className='my-2' />
                         <div className=' mx-4 text-[20px] flex justify-between'>
                             <p>Total Payable</p>
-                            <p className=''>₹{currentBuyProduct.product.sellingprice}</p>
+                            <p className=''>₹{currentBuyProduct[0].total_amount}</p>
                         </div>
-                        <hr className='mt-10 mb-2'/>
-                        <div>
-                            <div className='flex justify-center'>
-                                <img src={currentBuyProduct.product.images[0] || ""} className="w-40 h-40 "/>
-                            </div>
-                            <div className='mx-5 font-semibold text-center'>
-                                <p>{currentBuyProduct.product.name}</p>
-                                <p>₹{currentBuyProduct.product.sellingprice}</p>
-                            </div>
-                        </div>
+                        <hr className='mt-10 mb-2' />
+                        {
+                            currentBuyProduct?.map((item, i) => {
+                                return (
+                                    <div key={i}>
+                                        <div className='flex justify-center'>
+                                            <img src={item.product.images[0] || ""} className="w-40 h-40 " />
+                                        </div>
+                                        <div className='mx-5 font-semibold text-center'>
+                                            <p>{item.product.name}</p>
+                                            <p>₹{item.product.sellingprice}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+
                     </div>
                 </div>
             </section>

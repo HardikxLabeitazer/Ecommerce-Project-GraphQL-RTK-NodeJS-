@@ -4,10 +4,12 @@ import { UserAuthFinal } from '../../app/contextapi/UserContext'
 import { Modal, Form, Input } from 'antd';
 import { useMutation } from '@apollo/client';
 import graphQLQueries from '../../app/graphql/queries';
+import { useNavigate } from 'react-router';
 
 const Cart = () => {
 
-    const { currentCart, currentUser,refreshCart } = UserAuthFinal();
+    const { currentCart, currentUser,refreshCart,setCurrentBuyProduct } = UserAuthFinal();
+    const navigate = useNavigate();
     const [cartData, setCartData] = useState([] );
     const [checkoutForm] = Form.useForm();
     const [showCheckout, setShowCheckout] = useState(false);
@@ -66,6 +68,28 @@ const Cart = () => {
         })
     }
 
+    const handleCartCheckout = ()=>{
+        // setCurrentBuyProduct([{
+        //     product:product,
+        //     quantity:1,
+        //     shop:product?.shop?._id,
+        //     price:product?.sellingprice,
+        //     total_amount:product?.sellingprice
+        // }])
+
+        let itemArr = currentCart?.products?.map((data)=>{
+            return {
+                product:data.product,
+                quantity:data.quantity,
+                shop:data.product.shop._id,
+                price:data.product.sellingprice,
+                total_amount:currentCart.total_amount
+            }
+        })
+        setCurrentBuyProduct(itemArr);
+        navigate('/checkout')
+    }
+
     return (
         <Fragment>
           
@@ -118,7 +142,7 @@ const Cart = () => {
                                 })
                             }
 
-                            <button className='px-5 py-2 bg-gradient-to-l from-purple-400 to-purple-600 text-white rounded'>CheckOut</button>
+                            <button onClick={handleCartCheckout} className='px-10 py-2 bg-gradient-to-l from-purple-500 to-purple-600 text-white rounded my-10 font-semibold'>CheckOut</button>
                         </div>
                         <div className='w-1/3 fixed right-20 top-2'>
                             <p className='mx-3 my-3 text-gray-400 font-semibold text-lg'>Price Details</p>

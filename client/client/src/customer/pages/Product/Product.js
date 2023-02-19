@@ -95,12 +95,13 @@ const Product = () => {
 
     }
     const handleBuyNow = ()=>{
-        setCurrentBuyProduct({
+        setCurrentBuyProduct([{
             product:product,
             quantity:1,
             shop:product?.shop?._id,
-            price:product?.sellingprice
-        })
+            price:product?.sellingprice,
+            total_amount:product?.sellingprice
+        }])
         navigate('/checkout');
     }
 

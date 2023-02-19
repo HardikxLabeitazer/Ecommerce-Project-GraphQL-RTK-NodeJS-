@@ -19,12 +19,26 @@ export const cart = {
                     product{
                     _id
                     name
+                    description
+                    discount
+                    Unit
+                    images
+                    quantity
                     mrp
                     sellingprice
-                    shop {
-                        _id
-                        name
+                    features
+                    offers
+                    owner{
+                    _id 
+                    name
                     }
+                    shop{
+                    _id 
+                    name
+                    }
+                    manufacture
+                    model
+                    sku
                     }
                     quantity
                 }
@@ -50,13 +64,26 @@ export const cart = {
                     product{
                     _id
                     name
+                    description
+                    discount
+                    Unit
+                    images
+                    quantity
                     mrp
                     sellingprice
-                    images
-                    shop {
-                        _id
-                        name
+                    features
+                    offers
+                    owner{
+                    _id 
+                    name
                     }
+                    shop{
+                    _id 
+                    name
+                    }
+                    manufacture
+                    model
+                    sku
                     }
                     quantity
                 }
@@ -82,13 +109,26 @@ export const cart = {
                     product{
                     _id
                     name
-                    mrp
+                    description
+                    discount
+                    Unit
                     images
+                    quantity
+                    mrp
                     sellingprice
-                    shop {
-                        _id
-                        name
+                    features
+                    offers
+                    owner{
+                    _id 
+                    name
                     }
+                    shop{
+                    _id 
+                    name
+                    }
+                    manufacture
+                    model
+                    sku
                     }
                     quantity
                 }
@@ -112,15 +152,28 @@ export const cart = {
                 }
                 products{
                     product{
-                    _id
-                    name
-                    mrp
-                    images
-                    sellingprice
-                    shop {
                         _id
                         name
-                    }
+                        description
+                        discount
+                        Unit
+                        images
+                        quantity
+                        mrp
+                        sellingprice
+                        features
+                        offers
+                        owner{
+                        _id 
+                        name
+                        }
+                        shop{
+                        _id 
+                        name
+                        }
+                        manufacture
+                        model
+                        sku
                     }
                     quantity
                 }
